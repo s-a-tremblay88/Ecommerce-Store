@@ -1,0 +1,13 @@
+# Dependency folder — never commit node_modules
+node_modules/
+
+# Environment file — contains secrets, never commit
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*

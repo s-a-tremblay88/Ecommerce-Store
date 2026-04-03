@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>REST API CRUD Tester</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; }
+  h2 { margin-top: 40px; }
+  form { margin-bottom: 20px; padding: 10px; border: 1px solid #ccc; }
+  label { display: block; margin: 5px 0 2px; }
+  input, button { margin: 5px 0; padding: 5px; }
+  pre { background: #f4f4f4; padding: 10px; overflow: auto; }
+</style>
+</head>
+<body>
+<h1>REST API CRUD Tester</h1>
+ 
+ <!-- CREATE -->
+<h2>Create Product</h2>
+<form id="createProductForm">
+  <label>Store ID</label><input type="text" id="createStoreId" required>
+  <label>Store Name</label><input type="text" id="createStoreName" required>
+  <label>Product ID</label><input type="text" id="createProductId" required>
+  <label>Product Name</label><input type="text" id="createProductName" required>
+  <label>Price ($)</label><input type="text" id="createPrice" required><br>
+  <button type="submit">Create Product</button>
+</form>
+ 
+<h2>Get Product</h2>
+<form id="getProductForm">
+  <label>Product ID:</label><input type="text" id="getProductId" required><br>
+  <button type="submit">Fetch Product</button>
+</form>
+ 
+<!-- UPDATE -->
+<h2>Update Product</h2>
+<form id="updateProductForm">
+  <label>Product ID:</label><input type="text" id="updateProductId" required>
+  <label>New Product Name:</label><input type="text" id="updateProductName">
+  <label>New Price:</label><input type="text" id="updatePrice"><br>
+  <button type="submit">Update Product</button>
+</form>
+ 
+<!-- DELETE -->
+<h2>Delete Product</h2>
+<form id="deleteProductForm">
+  <label>Product ID:</label><input type="text" id="deleteProductId" required><br>
+  <button type="submit">Delete Product</button>
+</form>
+ 
+<h2>Response</h2>
+<pre id="jsonOutput">{}</pre>
+ 
+<script>
+const output = document.getElementById('jsonOutput');
+const apiBase = 'http://localhost:3000';
+ 
+function showJSON(data) {
+  output.textContent = JSON.stringify(data, null, 2);
+}
+ 
+async function handleFetch(url, options) {
+  try {
+    const res = await fetch(url, options);
+    const text = await res.text();
+    try {
+      // Try parsing JSON
+      const data = JSON.parse(text);
+      showJSON(data);
+    } catch {
+      // If not JSON, show as text
+      showJSON({ status: res.status, data: text });
+    }
+  } catch (err) {
+    showJSON({ error: err.message });
+  }
+}
+ 
+// CREATE
+document.getElementById('createProductForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const storeId = document.getElementById('createStoreId').value;
+  const storeName = document.getElementById('createStoreName').value;
+  const productId = document.getElementById('createProductId').value;
+  const productName = document.getElementById('createProductName').value;
+  const price = document.getElementById('createPrice').value;
+  handleFetch(`${apiBase}/products`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ storeId, storeName, productId, productName, price })
+  });
+});
+ 
+// READ (GET)
+document.getElementById('getProductForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const productId = document.getElementById('getProductId').value;
+  handleFetch(`${apiBase}/products/${productId}`);
+});
+ 
+// UPDATE
+document.getElementById('updateProductForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const storeId = document.getElementById('updateStoreId').value;
+  const storeName = document.getElementById('updateStoreName').value;
+  const productId = document.getElementById('updateProductId').value;
+  const productName = document.getElementById('updateProductName').value;
+  const price = document.getElementById('updatePrice').value;
+  handleFetch(`${apiBase}/products/${productId}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ storeId, storeName, productId, productName, price })
+  });
+});
+ 
+// DELETE
+document.getElementById('deleteProductForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const productId = document.getElementById('deleteProductId').value;
+  handleFetch(`${apiBase}/products/${productId}`, { method: 'DELETE' });
+});
+</script>
+</body>
+</html>

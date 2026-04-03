@@ -1,0 +1,30 @@
+{
+  "name": "ecommerce-store",
+  "version": "1.0.0",
+  "description": "E-commerce store module with CRUD operations using Node.js, Express, and MongoDB",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "test": "node test/store.test.js",
+    "seed": "node server/seed.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^16.6.1",
+    "express": "^4.22.1",
+    "mongodb": "^7.1.1",
+    "mongoose": "^7.8.9"
+  },
+  "devDependencies": {
+    "jest": "^30.3.0",
+    "node-fetch": "^2.6.9",
+    "supertest": "^7.2.2"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}

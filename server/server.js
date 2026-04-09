@@ -64,7 +64,7 @@ function fetchJSON(url) {
   });
 }
 
-jsapp.get('/all-stores', async (req, res) => {
+app.get('/all-stores', async (req, res) => {
   const teamStores = [
     'https://cst8326brettnorbury-production.up.railway.app/getAll',
     'https://module10-store-products-production.up.railway.app/products',

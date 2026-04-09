@@ -43,6 +43,43 @@ app.get('/getAll', async (req, res) => {
   }
 });
 
+// GET /all-stores — fetches products from all team members' deployed stores
+const https = require('https');
+const http  = require('http');
+
+function fetchJSON(url) {
+  return new Promise((resolve, reject) => {
+    const client = url.startsWith('https') ? https : http;
+    client.get(url, (response) => {
+      let raw = '';
+      response.on('data', chunk => raw += chunk);
+      response.on('end', () => {
+        try {
+          resolve(JSON.parse(raw));
+        } catch (e) {
+          reject(new Error('Invalid JSON from ' + url));
+        }
+      });
+    }).on('error', reject);
+  });
+}
+
+app.get('/all-stores', async (req, res) => {
+  const teamStores = [
+    'https://ecommerce-store-production-dd48.up.railway.app/getAll',
+    'https://cst8326brettnorbury-production.up.railway.app/getAll',
+    'https://module10-store-products-production.up.railway.app/products',
+  ];
+
+  try {
+    const responses  = await Promise.all(teamStores.map(url => fetchJSON(url)));
+    const allProducts = responses.flat();
+    res.json(allProducts);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // READ one
 app.get('/products/:id', async (req, res) => {
   try {

@@ -64,19 +64,21 @@ function fetchJSON(url) {
   });
 }
 
-app.get('/all-stores', async (req, res) => {
+jsapp.get('/all-stores', async (req, res) => {
   const teamStores = [
-    'https://ecommerce-store-production-dd48.up.railway.app/getAll',
     'https://cst8326brettnorbury-production.up.railway.app/getAll',
     'https://module10-store-products-production.up.railway.app/products',
   ];
 
   try {
-    const responses  = await Promise.all(teamStores.map(url => fetchJSON(url)));
-    const allProducts = responses.flat();
+    const myProducts = await Product.find(); 
+
+    const responses = await Promise.all(teamStores.map(url => fetchJSON(url)));
+    const allProducts = [...myProducts, ...responses.flat()]; 
     res.json(allProducts);
+
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: 'Failed to fetch from one or more stores: ' + err.message });
   }
 });
 

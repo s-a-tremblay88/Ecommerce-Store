@@ -13,6 +13,9 @@ async function runTest() {
         }
     } catch (err) {
         console.log("trem0417@algonquinlive.com - getAll to show all product - FAILED");
+        console.error(err.message);
+    } finally {
+        process.exit(0);
     }
 }
 

@@ -6,9 +6,7 @@ const { exec } = require("child_process");
 // Helper to run a command and print its output
 function run(label, command) {
   return new Promise(resolve => {
-    console.log(`\n==============================`);
     console.log(`Running: ${label}`);
-    console.log(`==============================\n`);
 
     exec(command, (error, stdout, stderr) => {
       if (stdout) console.log(stdout);
@@ -20,12 +18,12 @@ function run(label, command) {
 }
 
 (async () => {
-  // Your own test
+  // My own test
   await run("My getAll Test", "node test/store.test.js");
 
-  // Later: add teammates' tests here
-  // await run("Teammate 1 Test", "node tests/teammate1.test.js");
-  // await run("Teammate 2 Test", "node tests/teammate2.test.js");
+  // await run("Teammate 2 Test", "node tests/teammate1.test.js");
+  // await run("Teammate 3 Test", "node tests/teammate2.te
+  // st.js");
 
   console.log("\nAll tests completed.\n");
 })();

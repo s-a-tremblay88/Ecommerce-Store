@@ -1,29 +1,37 @@
-// automate.js
-// Runs all test scripts sequentially and prints clean output
-
 const { exec } = require("child_process");
 
-// Helper to run a command and print its output
 function run(label, command) {
   return new Promise(resolve => {
-    console.log(`Running: ${label}`);
+    console.log(`\nRunning: ${label}`);
 
     exec(command, (error, stdout, stderr) => {
-      if (stdout) console.log(stdout);
-      if (stderr) console.error(stderr);
-
+      if (stdout) console.log(stdout.trim());
+      if (stderr) console.error(stderr.trim());
       resolve(); // Continue to next test
     });
   });
 }
 
 (async () => {
-  // My own test
-  await run("My getAll Test", "node test/store.test.js");
 
-  // await run("Teammate 2 Test", "node tests/teammate1.test.js");
-  // await run("Teammate 3 Test", "node tests/teammate2.te
-  // st.js");
+  // 1. My test
+  await run("My Store", "node test/store.test.js");
+
+  // 2. Teammate tests
+  const tests = [
+    {
+      label: 'Brett Norbury (Teammate 2) Store',
+      script: 'node test/teammate2.test.js'
+    },
+    {
+      label: 'Jasper Godse (Teammate 3) Store',
+      script: 'node test/teammate3.test.js'
+    }
+  ];
+
+  for (const t of tests) {
+    await run(t.label, t.script);
+  }
 
   console.log("\nAll tests completed.\n");
 })();

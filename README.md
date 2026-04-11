@@ -1,4 +1,4 @@
-# Tech Haven – E-Commerce Store Module
+E-Commerce Store Module
 
 A full-stack e-commerce store built with **Node.js**, **Express**, **MongoDB Atlas**, and **Mongoose**. Provides a complete CRUD API for products and a browser-based frontend for manual testing.
 
@@ -6,11 +6,11 @@ A full-stack e-commerce store built with **Node.js**, **Express**, **MongoDB Atl
 
 ## Setup
 
-1. Clone or unzip the project folder.
+1. Create the project folder.
 2. Run `npm install` to install dependencies.
-3. Copy `.env.example` to `.env` and fill in your MongoDB Atlas URI and student email.
-4. Run `npm run seed` to populate 5 sample products in MongoDB.
-5. Run `npm start` to start the server at `http://localhost:3000`.
+3. `.env` and fill in MongoDB Atlas URI.
+4. Populate 5 products in MongoDB Atlas.
+5. Run `npm start` to start the server at `http://localhost:3000`, along with MongoDB Atlas `mongodb+srv://trem0417:123456789!@e-commerceproducts.qjkaium.mongodb.net/?appName=E-CommerceProducts` and Railway frontend URL `https://ecommerce-store-production-dd48.up.railway.app/`.
 
 ## API Endpoints
 
